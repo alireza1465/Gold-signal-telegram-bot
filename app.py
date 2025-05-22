@@ -1,1 +1,1 @@
-پاک کردن فایل app.py
+import telebot
