@@ -20,4 +20,6 @@ def index():
     return "ربات تحلیلگر طلا اجرا شده ✅", 200
 
 if __name__ == "__main__":
+    bot.remove_webhook()
+    bot.set_webhook(url="https://gold-signal-bot-bid5.onrender.com/" + TOKEN)
     app.run(host="0.0.0.0", port=10000)
