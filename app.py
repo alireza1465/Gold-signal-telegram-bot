@@ -1,38 +1,25 @@
 import telebot
 import requests
-import time
 
-# جایگزین کن با توکن واقعی رباتت
-bot = telebot.TeleBot("توکن_ربات_شما")
+BOT_TOKEN = '7635073258:AAHEd2yddm0ihR-l8Z_0P8UetkerdC77-gs'
+CHAT_ID = 'Alireza1465'
 
-# جایگزین کن با آیدی عددی تلگرام خودت
-user_id = 123456789
-
-last_signal = None
+bot = telebot.TeleBot(BOT_TOKEN)
 
 def get_gold_price():
-    try:
-        url = "https://api.metals.dev/v1/latest?symbol=XAU&api_key=demo"
-        response = requests.get(url)
-        data = response.json()
-        return float(data['metals']['XAU']['price'])
-    except Exception as e:
-        print("Error fetching gold price:", e)
-        return None
+    url = 'https://api.metals.live/v1/spot'
+    response = requests.get(url)
+    data = response.json()
+    gold_price = data[0]['gold']
+    return gold_price
 
-def check_signal():
-    global last_signal
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "سلام! ربات سیگنال طلا فعال شد ✅")
+
+@bot.message_handler(commands=['price'])
+def send_gold_price(message):
     price = get_gold_price()
-    if price:
-        if price < 2300 and last_signal != "buy":
-            bot.send_message(user_id, f"📉 سیگنال خرید: قیمت فعلی طلا {price} دلار")
-            last_signal = "buy"
-        elif price > 2350 and last_signal != "sell":
-            bot.send_message(user_id, f"📈 سیگنال فروش: قیمت فعلی طلا {price} دلار")
-            last_signal = "sell"
-        else:
-            print(f"No signal change. Price: {price}")
+    bot.send_message(message.chat.id, f"💰 قیمت لحظه‌ای طلا: {price} دلار")
 
-while True:
-    check_signal()
-    time.sleep(60)
+bot.infinity_polling()
