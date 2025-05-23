@@ -1,25 +1,30 @@
-import telebot
 from flask import Flask, request
+from telegram import Bot, Update
+from telegram.ext import Dispatcher, CommandHandler
+import os
 
-TOKEN = '7635073258:AAHEd2yddm0ihR-l8Z_0P8UetkerdC77-gs'
-bot = telebot.TeleBot(TOKEN)
+TOKEN = os.getenv("BOT_TOKEN")
+bot = Bot(token=TOKEN)
+
 app = Flask(__name__)
 
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    bot.reply_to(message, "سلام علیرضا! ✅ ربات تحلیلگر طلا فعال است.")
+@app.route('/')
+def home():
+    return "Bot is running."
 
-@app.route(f"/{TOKEN}", methods=['POST'])
+@app.route(f"/{TOKEN}", methods=["POST"])
 def webhook():
-    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
-    bot.process_new_updates([update])
-    return "OK", 200
+    update = Update.de_json(request.get_json(force=True), bot)
+    dispatcher.process_update(update)
+    return "OK"
 
-@app.route("/", methods=["GET"])
-def index():
-    return "ربات تحلیلگر طلا اجرا شده ✅", 200
+def start(update, context):
+    update.message.reply_text("ربات تحلیلگر طلا فعال است.")
+
+from telegram.ext import Updater
+updater = Updater(token=TOKEN, use_context=True)
+dispatcher = updater.dispatcher
+dispatcher.add_handler(CommandHandler("start", start))
 
 if __name__ == "__main__":
-    bot.remove_webhook()
-    bot.set_webhook(url="https://gold-signal-bot-bid5.onrender.com/" + TOKEN)
-    app.run(host="0.0.0.0", port=10000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
