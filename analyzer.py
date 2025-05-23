@@ -1,17 +1,11 @@
-import requests
-
 def get_gold_price():
-    response = requests.get("https://api.metals.live/v1/spot")
-    data = response.json()
-    for item in data:
-        if "gold" in item:
-            return float(item["gold"])
-    return 0
+    # این فقط یک عدد تستی است؛ بعداً به API متصل می‌کنیم
+    return 2350
 
 def analyze_price(price):
-    if price < 2300:
-        return f"📉 قیمت فعلی طلا: {price}$ \n📢 سیگنال: خرید کن ✅"
-    elif price > 2400:
-        return f"📈 قیمت فعلی طلا: {price}$ \n📢 سیگنال: بفروش ❌"
+    if price > 2400:
+        return "سیگنال فروش"
+    elif price < 2300:
+        return "سیگنال خرید"
     else:
-        return f"💤 قیمت فعلی طلا: {price}$ \n📢 سیگنال: صبر کن ⏳"
+        return "منتظر بمانید"
