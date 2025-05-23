@@ -1,13 +1,17 @@
-import random
+import requests
 
 def get_gold_price():
-    # شبیه‌سازی قیمت لحظه‌ای طلا
-    return random.uniform(2300, 2500)
+    response = requests.get("https://api.metals.live/v1/spot")
+    data = response.json()
+    for item in data:
+        if "gold" in item:
+            return float(item["gold"])
+    return 0
 
 def analyze_price(price):
-    if price < 2350:
-        return f"💰 قیمت فعلی طلا: {price:.2f} ➤ سیگنال: خرید ✅"
-    elif price > 2450:
-        return f"💰 قیمت فعلی طلا: {price:.2f} ➤ سیگنال: فروش ❌"
+    if price < 2300:
+        return f"📉 قیمت فعلی طلا: {price}$ \n📢 سیگنال: خرید کن ✅"
+    elif price > 2400:
+        return f"📈 قیمت فعلی طلا: {price}$ \n📢 سیگنال: بفروش ❌"
     else:
-        return f"💰 قیمت فعلی طلا: {price:.2f} ➤ سیگنال: نگهداری 📊"
+        return f"💤 قیمت فعلی طلا: {price}$ \n📢 سیگنال: صبر کن ⏳"
