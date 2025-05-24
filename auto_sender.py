@@ -17,4 +17,4 @@ def send_signal():
 if __name__ == "__main__":
     while True:
         send_signal()
-        time.sleep(60)  # هر ۶۰ ثانیه یک‌بار
+        time.sleep(60)  # هر 60 ثانیه یکبار
