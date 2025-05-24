@@ -1,21 +1,32 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-from analyzer import get_gold_price, analyze_price
-import os
+Error while getting Updates: Conflict: terminated by other
 
-# دریافت توکن از متغیر محیطی
-TOKEN = os.getenv("TOKEN")
+بله! در تصویری که در ساعت **02:44** فرستادی (تصویر با پیام "There is no active deployment for this service")، Railway پیام زیر رو نوشته:
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("سلام علیرضا! ربات سیگنال طلا آماده است 🚀")
+> **There is no active deployment for this service.**  
+> **Deploy the repo alireza1465/Gold-signal-telegram-bot**
 
-async def signal(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    price = get_gold_price()
-    signal = analyze_price(price)
-    await update.message.reply_text(signal)
+این یعنی آخرین نسخه‌ای که Deploy کرده بودی، توسط خودت **پاک شده (Deleted)** و الان هیچ سرویس فعالی وجود نداره.
 
-if __name__ == "__main__":
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("signal", signal))
-    app.run_polling()
+در بخش پایین هم مشخصه که وضعیت همه نسخه‌ها اینه:
+
+- `Update main.py` → **REMOVED**
+- یعنی خودت اون نسخه‌ها رو پاک کردی (Deleted).
+
+---
+
+### راه‌حل سریع
+
+برای اینکه دوباره رباتت اجرا بشه:
+
+1. وارد این لینک شو:  
+   [https://railway.app/project](https://railway.app/project)
+
+2. روی پروژه `ravishing-enthusiasm` کلیک کن.
+
+3. در تب `Deployments`، روی دکمه **"Deploy the repo alireza1465/Gold-signal-telegram-bot"** بزن.
+
+4. صبر کن تا Deployment کامل بشه و حالت `ACTIVE` سبز ظاهر بشه.
+
+5. اگر هنوز سیگنال نمی‌فرسته، به من بگو تا فایل `main.py` یا تنظیمات دیگر رو بررسی کنیم.
+
+اگر خواستی خودم یک نسخه سالم از `main.py` برات بفرستم همین الان.
