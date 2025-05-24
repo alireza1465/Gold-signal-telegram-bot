@@ -6,19 +6,20 @@ import os
 # دریافت توکن از متغیر محیطی
 TOKEN = os.getenv("TOKEN")
 
-# دستور start
+# شروع بات
 async def start(update: Update, context):
-    await update.message.reply_text("🚀 سلام علیرضا! ربات سیگنال طلا آماده است")
+    await update.message.reply_text("سلام علیرضا! ربات سیگنال طلا آماده است 🚀")
 
-# دستور signal
+# فرمان سیگنال
 async def signal(update: Update, context):
     price = get_gold_price()
     signal = analyze_price(price)
-    await update.message.reply_text(f"قیمت فعلی: {price}\nسیگنال: {signal}")
+    await update.message.reply_text(f"{signal}\nقیمت فعلی: {price}")
 
-# اجرای ربات
+# اجرای برنامه
 if __name__ == "__main__":
-    app = Application.builder().token(TOKEN).build()
+    from telegram.ext import ApplicationBuilder
+    app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("signal", signal))
     app.run_polling()
