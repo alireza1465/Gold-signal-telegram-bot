@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from analyzer import get_gold_price, analyze_price
 import os
 
-# دریافت توکن از محیط
+# دریافت توکن از متغیر محیطی
 TOKEN = os.getenv("TOKEN")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
