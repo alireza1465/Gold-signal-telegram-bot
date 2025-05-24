@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler
-from analyzer import get_gold_price, analyze_price
+from analyzer import analyze_price
 import os
 
 # دریافت توکن از متغیر محیطی
@@ -10,9 +10,9 @@ TOKEN = os.getenv("TOKEN")
 async def start(update: Update, context):
     await update.message.reply_text("سلام علیرضا! ربات سیگنال طلا آماده است 🚀")
 
-# فرمان سیگنال
+# فرمان سیگنال تستی
 async def signal(update: Update, context):
-    price = get_gold_price()
+    price = 2345.67  # قیمت تستی موقت
     signal = analyze_price(price)
     await update.message.reply_text(f"{signal}\nقیمت فعلی: {price}")
 
