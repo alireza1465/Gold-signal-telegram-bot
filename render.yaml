@@ -1,11 +1,5 @@
 services:
-  - type: web
-    name: gold-signal-service
+  - name: web
     env: python
-    buildCommand: ""
-    startCommand: "python app.py"
-    envVars:
-      - key: BOT_TOKEN
-        fromDotEnv: true
-      - key: CHAT_ID
-        fromDotEnv: true
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python auto_sender.py"
